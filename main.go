@@ -6,6 +6,7 @@ import (
 
 	"github.com/afthaab/simple-rest-api/db"
 	"github.com/afthaab/simple-rest-api/handler"
+	"github.com/afthaab/simple-rest-api/middleware"
 )
 
 func main() {
@@ -13,8 +14,8 @@ func main() {
 	db.AddStudentsData()
 
 	// endpoints and handler functions
-	http.HandleFunc("/students/viewall", handler.GetAllStudents)
-	http.HandleFunc("/students/view", handler.GetStudentByID)
+	http.HandleFunc("/students/viewall", middleware.Auth(handler.GetAllStudents))
+	http.HandleFunc("/students/view", middleware.Auth(handler.GetStudentByID))
 
 	// start the server
 	log.Println("Server started and running at localhost:8080")
